@@ -3,6 +3,7 @@ package br.com.rchlo.store.controller;
 import br.com.rchlo.store.dto.ProductByColorDto;
 import br.com.rchlo.store.dto.ProductDto;
 import br.com.rchlo.store.repository.ProductRepository;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -19,6 +20,7 @@ public class ProductController {
     }
 
     @GetMapping("/products")
+    @Cacheable(value = "productsList")
     public List<ProductDto> products() {
         return productRepository.findAllByOrderByName().stream().map(ProductDto::new).collect(Collectors.toList());
     }
