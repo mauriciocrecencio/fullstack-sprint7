@@ -3,79 +3,95 @@ package br.com.rchlo.store.dto;
 import br.com.rchlo.store.domain.Product;
 
 import java.math.BigDecimal;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class ProductDto {
 
-    private final Long code;
+  private final Long code;
 
-    private final String name;
+  private final String name;
 
-    private final String description;
+  private final String description;
 
-    private final String slug;
+  private final String slug;
 
-    private final String brand;
+  private final String brand;
 
-    private final BigDecimal originalPrice;
+  private final BigDecimal originalPrice;
 
-    private final boolean hasDiscount;
+  private final boolean hasDiscount;
 
-    private final BigDecimal effectivePrice;
+  private final BigDecimal effectivePrice;
 
-    private final String color;
+  private final String color;
 
-    private final Integer weightInGrams;
+  private final Integer weightInGrams;
 
-    public ProductDto(Product product) {
-        this.code = product.getCode();
-        this.name = product.getName();
-        this.description = product.getDescription();
-        this.slug = product.getSlug();
-        this.brand = product.getBrand();
-        this.originalPrice = product.getPrice();
-        this.hasDiscount = product.getDiscount() != null;
-        this.effectivePrice = this.hasDiscount ? this.originalPrice.subtract(product.getDiscount()) : this.originalPrice;
-        this.color = product.getColor().getDescription();
-        this.weightInGrams = product.getWeightInGrams();
-    }
+  private final List<ProductImageDto> imagesList;
 
-    public Long getCode() {
-        return code;
-    }
+  private final CategoryDto category;
 
-    public String getName() {
-        return name;
-    }
+  public ProductDto(Product product) {
+    this.code = product.getCode();
+    this.name = product.getName();
+    this.description = product.getDescription();
+    this.slug = product.getSlug();
+    this.brand = product.getBrand();
+    this.originalPrice = product.getPrice();
+    this.hasDiscount = product.getDiscount() != null;
+    this.effectivePrice =
+        this.hasDiscount ? this.originalPrice.subtract(product.getDiscount()) : this.originalPrice;
+    this.color = product.getColor().getDescription();
+    this.weightInGrams = product.getWeightInGrams();
+    this.imagesList = product.getImages().stream().map(p -> new ProductImageDto(p.getImageUrl()))
+                         .collect(Collectors.toList());
+    this.category = new CategoryDto(product.getCategory());
+  }
 
-    public String getDescription() {
-        return description;
-    }
+  public Long getCode() {
+    return code;
+  }
 
-    public String getSlug() {
-        return slug;
-    }
+  public String getName() {
+    return name;
+  }
 
-    public String getBrand() {
-        return brand;
-    }
+  public String getDescription() {
+    return description;
+  }
 
-    public BigDecimal getOriginalPrice() {
-        return originalPrice;
-    }
+  public String getSlug() {
+    return slug;
+  }
 
-    public boolean isHasDiscount() {
-        return hasDiscount;
-    }
+  public String getBrand() {
+    return brand;
+  }
 
-    public BigDecimal getEffectivePrice() {
-        return effectivePrice;
-    }
+  public BigDecimal getOriginalPrice() {
+    return originalPrice;
+  }
 
-    public String getColor() {
-        return color;
-    }
+  public boolean isHasDiscount() {
+    return hasDiscount;
+  }
 
-    public Integer getWeightInGrams() {
-        return weightInGrams;
-    }
+  public BigDecimal getEffectivePrice() {
+    return effectivePrice;
+  }
+
+  public String getColor() {
+    return color;
+  }
+
+  public Integer getWeightInGrams() {
+    return weightInGrams;
+  }
+  public List<ProductImageDto> getImagesList() {
+    return imagesList;
+  }
+  public CategoryDto getCategory() {
+    return category;
+  }
 }
