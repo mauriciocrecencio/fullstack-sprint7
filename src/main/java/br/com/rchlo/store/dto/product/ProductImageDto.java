@@ -1,4 +1,4 @@
-package br.com.rchlo.store.dto;
+package br.com.rchlo.store.dto.product;
 
 public class ProductImageDto {
   private final String imageUrl;

@@ -1,4 +1,4 @@
-package br.com.rchlo.store.dto;
+package br.com.rchlo.store.dto.category;
 
 import br.com.rchlo.store.domain.Category;
 

@@ -63,3 +63,10 @@ create table payment (
     card_verification_code varchar(3) not null,
     primary key (id)
 ) engine=InnoDB default charset=latin1;
+
+-- create table user (
+--     id bigint(20) not null auto_increment,
+--     username varchar(255) not null,
+--     password varchar(255) not null,
+--     primary key (id)
+-- ) engine=InnoDB default charset=latin1;

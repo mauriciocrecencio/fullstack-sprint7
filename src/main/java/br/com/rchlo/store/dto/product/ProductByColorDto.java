@@ -1,4 +1,4 @@
-package br.com.rchlo.store.dto;
+package br.com.rchlo.store.dto.product;
 
 import br.com.rchlo.store.domain.Color;
 
@@ -18,5 +18,13 @@ public class ProductByColorDto {
 
     public long getAmount() {
         return amount;
+    }
+
+    @Override
+    public String toString() {
+        return "ProductByColorDto{" +
+            "color='" + color + '\'' +
+            ", amount=" + amount +
+            '}';
     }
 }

@@ -1,7 +1,9 @@
 package br.com.rchlo.store.repository;
 
-import br.com.rchlo.store.domain.Color;
 import br.com.rchlo.store.domain.Product;
+import br.com.rchlo.store.dto.product.ProductByColorDto;
+import mother.ProductMother;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
@@ -10,7 +12,6 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -27,37 +28,47 @@ class ProductRepositoryTest {
     @Autowired
     private ProductRepository productRepository;
 
+    @BeforeEach
+    public void persistProducts() {
+        entityManager.persist(ProductMother.aBlueJacket());
+        entityManager.persist(ProductMother.aCheapTankTop());
+        entityManager.persist(ProductMother.aTShirt());
+    }
+
     @Test
     void shouldListAllProductsOrderedByName() {
-        entityManager.persist(new Product(7L,
-                "Jaqueta Puffer Juvenil Com Capuz Super Mario Branco",
-                "A Jaqueta Puffer Juvenil Com Capuz Super Mario Branco é confeccionada em material sintético.",
-                "jaqueta-puffer-juvenil-com-capuz-super-mario-branco-13834193_sku",
-                "Nintendo",
-                new BigDecimal("199.90"),
-                null,
-                Color.WHITE,
-                147));
-        entityManager.persist(new Product(1L,
-                "Regata Infantil Mario Bros Branco",
-                "A Regata Infantil Mario Bros Branco é confeccionada em fibra natural. Aposte!",
-                "regata-infantil-mario-bros-branco-14040174_sku",
-                "Nintendo",
-                new BigDecimal("29.90"),
-                null,
-                Color.WHITE,
-                98));
 
-        List<Product> products = productRepository.findAll();
+        List<Product> products = productRepository.findAllByOrderByName();
 
-        assertEquals(2, products.size());
+        assertEquals(3, products.size());
 
         Product firstProduct = products.get(0);
-        assertEquals(7L, firstProduct.getCode());
-        assertEquals("Jaqueta Puffer Juvenil Com Capuz Super Mario Branco", firstProduct.getName());
+        assertEquals(5L, firstProduct.getCode());
+        assertEquals("Camiseta Azul", firstProduct.getName());
 
         Product secondProduct = products.get(1);
-        assertEquals(1L, secondProduct.getCode());
-        assertEquals("Regata Infantil Mario Bros Branco", secondProduct.getName());
+        assertEquals("Jaqueta Puffer Juvenil Com Capuz Super Mario Branco", secondProduct.getName());
+        assertEquals(7L, secondProduct.getCode());
+
+        Product thirdProduct = products.get(2);
+        assertEquals(1L, thirdProduct.getCode());
+        assertEquals("Regata Infantil Mario Bros Branco", thirdProduct.getName());
+
+
+
+    }
+
+    @Test
+    void shouldReturnProductsByColor() {
+        List<ProductByColorDto> productByColor = productRepository.productsByColor();
+
+        ProductByColorDto whiteReport = productByColor.get(0);
+        assertEquals("Branca", whiteReport.getColor());
+        assertEquals(2L, whiteReport.getAmount());
+
+        ProductByColorDto blueReport = productByColor.get(1);
+        assertEquals("Azul", blueReport.getColor());
+        assertEquals(1L, blueReport.getAmount());
+
     }
 }

@@ -4,8 +4,11 @@ import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import java.math.BigDecimal;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
@@ -38,6 +41,8 @@ public class Product {
     @OneToOne
     private Category category;
 
+//    @JoinTable(name = "product_available_sizes")
+//    @ManyToMany(fetch = FetchType.EAGER)
 //    private List<Size> availableSizes;
 
     /** @deprecated */

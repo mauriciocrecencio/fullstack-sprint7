@@ -9,8 +9,24 @@ public class ProductImage {
     private Long id;
 
     @ManyToOne
+    @JoinColumn
     private Product product;
 
     private String imageUrl;
 
+    public Product getProduct() {
+        return product;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
 }

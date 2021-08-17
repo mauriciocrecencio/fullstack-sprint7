@@ -1,7 +1,8 @@
-package br.com.rchlo.store.dto;
+package br.com.rchlo.store.dto.product;
 
 import br.com.rchlo.store.domain.Product;
 
+import br.com.rchlo.store.dto.category.CategoryDto;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Collectors;
