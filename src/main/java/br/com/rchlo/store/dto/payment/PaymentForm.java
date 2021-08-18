@@ -10,8 +10,8 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Positive;
-import javax.validation.constraints.Size;
-import org.hibernate.validator.constraints.Range;
+
+import org.hibernate.validator.constraints.Length;
 
 public class PaymentForm {
 
@@ -21,12 +21,12 @@ public class PaymentForm {
   private BigDecimal value;
 
   @NotEmpty(message = "cardClientName is required")
-  @Size(max = 100)
+  @Length(max = 100)
   private String cardClientName;
 
   @NotEmpty(message = "cardNumber is required")
 //  O regex já verifica o Size de 16, mas preferi deixar separado
-//  a verificacao de Somente Numeros e tamanho para ficar mais claro ao usuário
+//  a verificacao de Somente Numeros e tamanho para ficar mais claro ao usuário sobre a msg
   @Pattern(regexp = "^[0-9]*", message = "must contains only numbers")
   @Pattern(regexp = "^[0-9]{16}", message = "size must be 16")
   private String cardNumber;
@@ -95,6 +95,4 @@ public class PaymentForm {
   public void setStatus(PaymentStatus status) {
     this.status = status;
   }
-
-  //  { "value": 79.9, "cardClientName": "ANDERSON SILVA", "cardNumber": "1234567890120987", "cardExpiration": "2022-04", "cardVerificationCode": "121"}
 }
